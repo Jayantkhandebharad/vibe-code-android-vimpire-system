@@ -1,0 +1,44 @@
+[versions]
+agp = "7.3.1"
+kotlin = "1.8.10"
+room = "2.5.0"
+datastore = "1.0.0"
+work = "2.8.0"
+camerax = "1.2.0"
+coil = "2.3.0"
+serialization = "1.5.0"
+exoplayer = "2.18.0"
+lifecycle = "2.6.0"
+coroutines = "1.6.4"
+
+[libraries]
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+
+work-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
+
+camerax-core = { module = "androidx.camera:camera-core", version.ref = "camerax" }
+camerax-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax" }
+camerax-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camerax" }
+camerax-video = { module = "androidx.camera:camera-video", version.ref = "camerax" }
+
+coil = { module = "io.coil-kt:coil", version.ref = "coil" }
+
+serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+
+exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
+
+lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+
