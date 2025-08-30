@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.notifications.NotificationsFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:padding="12dp"
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_notifications"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView android:id="@+id/lblLastSummary"
+        android:text="No summary yet"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnRollover"
+            android:text="Run Rollover Now"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <Space android:layout_width="12dp" android:layout_height="0dp"/>
+        <Button
+            android:id="@+id/btnIncBackup"
+            android:text="Backup Now (Inc)"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnOpenSettings"
+        android:text="Settings"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnOpenAdmin"
+        android:text="Admin Studio"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</LinearLayout>

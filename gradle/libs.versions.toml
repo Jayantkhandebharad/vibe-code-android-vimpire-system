@@ -1,20 +1,38 @@
 [versions]
-agp = "7.3.1"
-kotlin = "1.8.10"
-room = "2.5.0"
+agp = "8.12.0"
+kotlin = "2.0.21"
+room = "2.6.1"
 datastore = "1.0.0"
 work = "2.8.0"
 camerax = "1.2.0"
-coil = "2.3.0"
+coil = "2.6.0"
+coilVideo = "2.6.0"
 serialization = "1.5.0"
 exoplayer = "2.18.0"
 lifecycle = "2.6.0"
 coroutines = "1.6.4"
+fragment = "1.6.2"
+recyclerview = "1.3.2"
+cardview = "1.0.0"
+documentfile = "1.0.1"
+material = "1.8.0"
+splashscreen = "1.0.1"
+timber = "5.0.1"
+junit = "4.13.2"
+robolectric = "4.12.2"
+androidx-test-core = "1.5.0"
+androidx-test-ext = "1.1.5"
+espresso = "3.5.1"
+truth = "1.1.5"
+paging = "3.3.2"
+navigationFragmentKtx = "2.9.3"
+navigationUiKtx = "2.9.3"
 
 [libraries]
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 
 datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
@@ -32,9 +50,30 @@ serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-jso
 exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
 
 lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle" }
+lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+
+fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
+recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
+documentfile = { module = "androidx.documentfile:documentfile", version.ref = "documentfile" }
+
+material = { module = "com.google.android.material:material", version.ref = "material" }
+splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+junit = { module = "junit:junit", version.ref = "junit" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test-core" }
+androidx-test-ext = { module = "androidx.test.ext:junit", version.ref = "androidx-test-ext" }
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+truth = { module = "com.google.truth:truth", version.ref = "truth" }
+paging = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
+coil-video = { module = "io.coil-kt:coil-video", version.ref = "coilVideo" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

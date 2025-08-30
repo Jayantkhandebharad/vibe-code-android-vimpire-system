@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+  <LinearLayout
+      android:orientation="vertical" android:padding="12dp"
+      android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <TextView android:text="Task ID (stable, unique)"/>
+    <EditText android:id="@+id/etId"/>
+
+    <TextView android:text="Ability ID (optional, e.g., ship, gym)"/>
+    <EditText android:id="@+id/etAbilityId"/>
+
+    <TextView android:text="Spec (what to do)"/>
+    <EditText android:id="@+id/etSpec"/>
+
+    <TextView android:text="Acceptance (one per line)"/>
+    <EditText android:id="@+id/etAcceptance"
+        android:inputType="textMultiLine" android:minLines="4"/>
+
+    <Button android:id="@+id/btnSave" android:text="Save"/>
+  </LinearLayout>
+</ScrollView>
+
+

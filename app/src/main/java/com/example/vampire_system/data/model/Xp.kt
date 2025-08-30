@@ -9,6 +9,12 @@ object Xp {
     val FOUNDATIONS: List<String> = listOf(
         "pushups", "reading", "notes", "meditation", "mobility"
     )
+
+    fun totalXpToReach(level: Int): Int {
+        var sum = 0
+        for (l in 1 until level) sum += xpForLevel(l)
+        return sum
+    }
 }
 
 

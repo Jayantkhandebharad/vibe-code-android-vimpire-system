@@ -27,3 +27,16 @@
     @kotlinx.serialization.Serializable *;
 }
 -dontwarn org.jetbrains.annotations.**
+
+# Room
+-keep class androidx.room.** { *; }
+-keep class com.example.vampire_system.data.db.** { *; }
+
+# Kotlinx serialization
+-keepclassmembers class **$$serializer { *; }
+-keepclassmembers class kotlinx.serialization.** { *; }
+-keep @kotlinx.serialization.Serializable class * { *; }
+-keep class kotlinx.serialization.json.** { *; }
+
+# Material transitions (names used by XML)
+-keep class com.google.android.material.transition.** { *; }

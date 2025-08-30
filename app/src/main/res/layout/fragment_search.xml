@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+  <LinearLayout
+      android:orientation="vertical" android:padding="10dp"
+      android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:queryHint="Search notes, quests, tasks…"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <!-- Pins row (Phase 15) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPins"
+        android:layout_width="match_parent" android:layout_height="40dp"
+        android:layout_marginTop="4dp"/>
+
+    <!-- Quick date ranges -->
+    <LinearLayout
+        android:id="@+id/dateChipRow"
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="6dp">
+        <Button android:id="@+id/chThisWeek" android:text="This week"/>
+        <Space android:layout_width="6dp" android:layout_height="0dp"/>
+        <Button android:id="@+id/chLast7" android:text="Last 7d"/>
+        <Space android:layout_width="6dp" android:layout_height="0dp"/>
+        <Button android:id="@+id/chLast30" android:text="Last 30d"/>
+        <Space android:layout_width="6dp" android:layout_height="0dp"/>
+        <Button android:id="@+id/chClearDates" android:text="Clear"/>
+    </LinearLayout>
+
+    <!-- Kind + Ability (multi) -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="6dp">
+        <Spinner android:id="@+id/spKind"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btnPickAbilities"
+            android:text="Abilities (0)"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+    </LinearLayout>
+
+    <!-- selected abilities preview -->
+    <TextView
+        android:id="@+id/tvAbilitiesPreview"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textColor="#666" android:layout_marginTop="4dp" android:maxLines="2"/>
+
+    <!-- From/To + toggles -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="6dp">
+        <Button android:id="@+id/btnFrom" android:text="From"/>
+        <Space android:layout_width="8dp" android:layout_height="0dp"/>
+        <Button android:id="@+id/btnTo" android:text="To"/>
+        <Space android:layout_width="8dp" android:layout_height="0dp"/>
+        <CheckBox android:id="@+id/cbDone" android:text="Done only"/>
+        <Space android:layout_width="8dp" android:layout_height="0dp"/>
+        <CheckBox android:id="@+id/cbEvidence" android:text="Has evidence"/>
+    </LinearLayout>
+
+    <!-- XP range + 'all words' -->
+    <TextView
+        android:text="XP range (quests only)"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"/>
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/rsXp"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:valueFrom="0" android:valueTo="1000"
+        android:stepSize="10"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:id="@+id/tvXpLabel"
+            android:text="0–1000 XP" android:textColor="#666"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+        <CheckBox android:id="@+id/cbAllWords" android:text="Match all words"/>
+    </LinearLayout>
+
+    <!-- Maintenance -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="6dp">
+        <Button android:id="@+id/btnRebuild" android:text="Rebuild Index"/>
+        <Space android:layout_width="8dp" android:layout_height="0dp"/>
+        <Button android:id="@+id/btnSavePin" android:text="Save as Pin"/>
+    </LinearLayout>
+
+    <!-- Results -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"/>
+  </LinearLayout>
+</ScrollView>

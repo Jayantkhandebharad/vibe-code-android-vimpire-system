@@ -22,4 +22,43 @@
         android:name="com.example.vampire_system.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="com.example.vampire_system.ui.history.HistoryFragment"
+        android:label="History" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.vampire_system.ui.profile.ProfileFragment"
+        android:label="Profile" />
+    <fragment
+        android:id="@+id/navigation_backup_settings"
+        android:name="com.example.vampire_system.features.backup.BackupSettingsFragment"
+        android:label="Backup" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.example.vampire_system.ui.settings.SettingsFragment"
+        android:label="Settings" />
+    <fragment
+        android:id="@+id/navigation_admin"
+        android:name="com.example.vampire_system.ui.admin.AdminFragment"
+        android:label="Admin Studio" />
+
+    <fragment
+        android:id="@+id/navigation_gallery"
+        android:name="com.example.vampire_system.features.evidence.GalleryFragment"
+        android:label="Evidence" >
+        <argument android:name="qi" android:defaultValue="" app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_roadmap"
+        android:name="com.example.vampire_system.ui.roadmap.RoadmapFragment"
+        android:label="Roadmap" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.example.vampire_system.ui.search.SearchFragment"
+        android:label="Search" />
 </navigation>

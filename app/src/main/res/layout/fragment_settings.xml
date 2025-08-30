@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+  <LinearLayout
+      android:orientation="vertical" android:padding="16dp"
+      android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <TextView android:text="Day Settings" android:textStyle="bold"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <TextView android:text="Reset hour (0–23)"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <EditText android:id="@+id/etResetHour" android:inputType="number"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+    <TextView android:text="Timezone"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <EditText android:id="@+id/etTimezone" android:hint="e.g. Asia/Kolkata"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+    <TextView android:text="Profile" android:textStyle="bold"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <TextView android:text="Weight (kg)"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <EditText android:id="@+id/etWeight" android:inputType="numberDecimal"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <TextView android:text="Protein (g/kg)"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <EditText android:id="@+id/etProteinPerKg" android:inputType="numberDecimal"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+    <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+    <Button android:id="@+id/btnSave" android:text="Save"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <Button android:id="@+id/btnRegenerateToday" android:text="Regenerate Today (apply changes)"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+    <Space android:layout_width="match_parent" android:layout_height="24dp"/>
+
+    <TextView android:text="About &amp; Privacy" android:textStyle="bold" android:textSize="16sp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <TextView android:text="This app stores all data locally on your device. No data is sent to external servers. When you export data, it's saved to a folder you choose on your device. No analytics or crash reporting is enabled by default."
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" android:textSize="14sp"/>
+  </LinearLayout>
+</ScrollView>
+
+

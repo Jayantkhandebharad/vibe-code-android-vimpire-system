@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical" android:padding="12dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <TextView android:text="Profile" android:textStyle="bold" android:textSize="18sp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+        <TextView android:id="@+id/tvWeight" android:text="Weight: -"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView android:id="@+id/tvProtein" android:text="Protein target: -"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView android:id="@+id/tvTz" android:text="Timezone: -"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView android:id="@+id/tvReset" android:text="Reset hour: 05:00"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+        <Button android:id="@+id/btnEdit" android:text="Edit Profile"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+        <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+        <TextView android:text="Weekly meters" android:textStyle="bold"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView android:id="@+id/meterStrengthLabel" android:text="Strength (Fitness)"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <ProgressBar android:id="@+id/meterStrength" style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent" android:layout_height="10dp" android:max="150"/>
+
+        <TextView android:id="@+id/meterKnowledgeLabel" android:text="Knowledge (GenAI)"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <ProgressBar android:id="@+id/meterKnowledge" style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent" android:layout_height="10dp" android:max="200"/>
+
+        <TextView android:id="@+id/meterCommLabel" android:text="Communication"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <ProgressBar android:id="@+id/meterComm" style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent" android:layout_height="10dp" android:max="100"/>
+
+        <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+        <TextView android:id="@+id/tvPenalties" android:text="Penalties (7d): 0 (0 XP)"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>
+
+

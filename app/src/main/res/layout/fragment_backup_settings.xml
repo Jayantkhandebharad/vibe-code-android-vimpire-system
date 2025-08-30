@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical" android:padding="16dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <TextView android:text="Backup Folder" android:textStyle="bold"/>
+        <TextView android:id="@+id/tvFolder" android:text="(none selected)"/>
+        <Button android:id="@+id/btnPickFolder" android:text="Choose Folder"/>
+
+        <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+        <TextView android:text="Encryption" android:textStyle="bold"/>
+        <Switch android:id="@+id/swEncrypt" android:text="Encrypt backups (recommended)" android:checked="true"/>
+
+        <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+        <TextView android:text="Passphrase (for cross-device restore)" android:textStyle="bold"/>
+        <EditText android:id="@+id/etHint" android:hint="Hint (optional)"/>
+        <EditText android:id="@+id/etPass" android:hint="Passphrase" android:inputType="textPassword"/>
+        <EditText android:id="@+id/etPass2" android:hint="Repeat passphrase" android:inputType="textPassword"/>
+        <Button android:id="@+id/btnSavePassphrase" android:text="Save Passphrase &amp; Write key.enc"/>
+
+        <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+        <Button android:id="@+id/btnFullNow" android:text="Run FULL backup now"/>
+        <Button android:id="@+id/btnIncNow" android:text="Run INCREMENTAL backup now"/>
+
+        <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+        <Button android:id="@+id/btnRestore" android:text="Restore from picked FULL folder"/>
+    </LinearLayout>
+</ScrollView>
+
+

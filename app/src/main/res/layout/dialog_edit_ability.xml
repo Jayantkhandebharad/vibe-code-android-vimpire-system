@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+  <LinearLayout
+      android:orientation="vertical" android:padding="12dp"
+      android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <TextView android:text="Name"/>
+    <EditText android:id="@+id/etName"/>
+
+    <TextView android:text="Unit (e.g., rep, 10min, page)"/>
+    <EditText android:id="@+id/etUnit"/>
+
+    <TextView android:text="Daily Cap XP (blank = none)"/>
+    <EditText android:id="@+id/etCap" android:inputType="number"/>
+
+    <TextView android:text="Unlock Level"/>
+    <EditText android:id="@+id/etUnlock" android:inputType="number"/>
+
+    <Button android:id="@+id/btnSave" android:text="Save"/>
+  </LinearLayout>
+</ScrollView>
+
+
