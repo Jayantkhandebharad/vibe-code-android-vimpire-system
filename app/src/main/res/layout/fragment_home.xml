@@ -5,13 +5,15 @@
     android:paddingRight="12dp"
     android:paddingBottom="12dp"
     android:paddingTop="2dp"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/home_gradient_background">
 
     <TextView
         android:id="@+id/homeHeader"
         android:text="Today's Quests"
         android:textStyle="bold"
         android:textSize="18sp"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"
@@ -24,21 +26,33 @@
         <Button
             android:id="@+id/btnGenerate"
             android:text="Generate"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@drawable/button_neon_cyan_gradient"
+            android:textColor="@color/white"
+            android:drawableStart="@android:drawable/ic_menu_add"
+            android:drawablePadding="8dp"/>
 
         <Space android:layout_width="12dp" android:layout_height="0dp"/>
 
         <Button
             android:id="@+id/btnCheckCoreGate"
             android:text="Core Gate"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@drawable/button_outlined_cyan"
+            android:textColor="@color/neon_cyan"
+            android:drawableStart="@android:drawable/ic_menu_help"
+            android:drawablePadding="8dp"/>
 
         <Space android:layout_width="12dp" android:layout_height="0dp"/>
 
         <Button
             android:id="@+id/btnRefreshQuests"
             android:text="Refresh"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@drawable/button_neon_cyan_gradient"
+            android:textColor="@color/white"
+            android:drawableStart="@android:drawable/ic_menu_rotate"
+            android:drawablePadding="8dp"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

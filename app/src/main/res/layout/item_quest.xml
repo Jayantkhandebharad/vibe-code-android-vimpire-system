@@ -1,58 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:layout_marginBottom="8dp"
     android:layout_marginTop="4dp"
-    android:elevation="2dp">
+    android:elevation="3dp"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="@color/translucent_white">
 
     <LinearLayout
         android:orientation="vertical"
-        android:padding="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/questTitle"
-            android:textStyle="bold"
-            android:textSize="16sp"
+        <!-- Colored accent bar -->
+        <View
+            android:id="@+id/questAccentBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/questSub"
-            android:textSize="13sp"
-            android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/questBtn"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mark Done" />
+            android:layout_height="4dp"
+            android:background="@color/neon_magenta" />
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/questTitle"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp" />
+
+            <TextView
+                android:id="@+id/questSub"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/questDetails"
+                android:textSize="13sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="2dp" />
 
             <Button
-                android:id="@+id/btnAttach"
-                android:text="Add Evidence"
-                android:contentDescription="Add evidence for this quest"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                android:id="@+id/questBtn"
+                android:layout_marginTop="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mark Done"
+                android:textSize="14sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@drawable/button_neon_cyan_gradient"
+                android:textColor="@color/white"
+                android:drawableStart="@android:drawable/ic_menu_send"
+                android:drawablePadding="8dp" />
 
-            <Space android:layout_width="12dp" android:layout_height="0dp"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent" 
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
 
-            <Button
-                android:id="@+id/btnView"
-                android:text="View Evidence"
-                android:contentDescription="View evidence for this quest"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/btnAttach"
+                    android:text="Add Evidence"
+                    android:contentDescription="Add evidence for this quest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="12sp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:background="@drawable/button_outlined_cyan"
+                    android:textColor="@color/neon_cyan"
+                    android:drawableStart="@android:drawable/ic_menu_upload"
+                    android:drawablePadding="6dp"/>
+
+                <Space android:layout_width="8dp" android:layout_height="0dp"/>
+
+                <Button
+                    android:id="@+id/btnView"
+                    android:text="View Evidence"
+                    android:contentDescription="View evidence for this quest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="12sp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/white"
+                    android:drawableStart="@android:drawable/ic_menu_view"
+                    android:drawablePadding="6dp"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

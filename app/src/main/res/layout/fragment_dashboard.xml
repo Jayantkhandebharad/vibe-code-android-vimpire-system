@@ -5,10 +5,12 @@
     android:paddingRight="12dp"
     android:paddingBottom="12dp"
     android:paddingTop="4dp"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/home_gradient_background">
 
     <TextView android:id="@+id/lblLevel" android:text="Level 1"
         android:textStyle="bold" android:textSize="18sp"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
     <ProgressBar
@@ -18,11 +20,13 @@
         android:layout_marginTop="8dp" android:max="100"/>
 
     <TextView android:id="@+id/xpText" android:text="0 / 100 XP"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginTop="4dp"/>
 
     <TextView android:id="@+id/counts"
         android:text="0 pending • 0 done"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginTop="12dp"/>
 
