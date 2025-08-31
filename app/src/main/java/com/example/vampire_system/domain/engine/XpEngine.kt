@@ -12,6 +12,7 @@ class XpEngine(
     private val abilityDao = db.abilityDao()
     private val qiDao = db.questInstanceDao()
     private val ledger = db.xpLedgerDao()
+    private val levelTaskDao = db.levelTaskDao()
 
     private fun normalizedUnitsForPerUnit(ability: AbilityEntity, amount: Double): Double =
         when (ability.id) {
@@ -105,31 +106,77 @@ class XpEngine(
 
     suspend fun completeQuest(qiId: String, amount: Double): Int {
         val qi = db.questInstanceDao().byId(qiId) ?: return 0
-        val abilityId = qi.abilityId ?: return 0
-        val ability = db.abilityDao().byId(abilityId) ?: return 0
+        
+        android.util.Log.d("XpEngine", "completeQuest called for quest ${qi.id}, templateId: ${qi.templateId}, abilityId: ${qi.abilityId}")
+        
+        // Check if this is a level task quest (has templateId) or ability quest
+        if (qi.templateId != null) {
+            // This is a level task quest - use the task's XP reward
+            android.util.Log.d("XpEngine", "Quest has templateId, treating as level task quest")
+            return completeLevelTaskQuest(qiId, amount)
+        } else {
+            // This is an ability quest - use the ability's XP rules
+            android.util.Log.d("XpEngine", "Quest has no templateId, treating as ability quest")
+            val abilityId = qi.abilityId ?: return 0
+            val ability = db.abilityDao().byId(abilityId) ?: return 0
 
-        val hasRequiredEvidence = if (ability.seriousness != null) {
-            val kinds = ability.evidenceKinds
-            val placeholders = kinds.joinToString(",") { "?" }
-            val args = arrayOf(qiId) + kinds.map { it.name }
-            db.openHelper.readableDatabase.query(
-                "SELECT COUNT(1) FROM evidence WHERE questInstanceId=? AND kind IN ($placeholders)", args
-            ).use { c -> if (c.moveToFirst()) c.getInt(0) else 0 } > 0
-        } else true
+            val hasRequiredEvidence = if (ability.seriousness != null) {
+                val kinds = ability.evidenceKinds
+                val placeholders = kinds.joinToString(",") { "?" }
+                val args = arrayOf(qiId) + kinds.map { it.name }
+                db.openHelper.readableDatabase.query(
+                    "SELECT COUNT(1) FROM evidence WHERE questInstanceId=? AND kind IN ($placeholders)", args
+                ).use { c -> if (c.moveToFirst()) c.getInt(0) else 0 } > 0
+            } else true
 
-        var base = when (val rule = ability.xpRule) {
-            is XpRule.PerUnit   -> (rule.xpPerUnit * normalizedUnitsForPerUnit(ability, amount)).toInt()
-            is XpRule.PerMinutes-> {
-                val blocks = (amount / 10.0)
-                (rule.xpPer10Min * blocks).toInt()
+            var base = when (val rule = ability.xpRule) {
+                is XpRule.PerUnit   -> (rule.xpPerUnit * normalizedUnitsForPerUnit(ability, amount)).toInt()
+                is XpRule.PerMinutes-> {
+                    val blocks = (amount / 10.0)
+                    (rule.xpPer10Min * blocks).toInt()
+                }
+                is XpRule.Flat      -> rule.xp
             }
-            is XpRule.Flat      -> rule.xp
-        }
-        if (ability.seriousness != null && !hasRequiredEvidence) {
-            base = if (ability.xpRule is XpRule.Flat) (base / 2) else 0
-        }
-        ability.dailyCapXp?.let { cap -> if (base > cap) base = cap }
+            if (ability.seriousness != null && !hasRequiredEvidence) {
+                base = if (ability.xpRule is XpRule.Flat) (base / 2) else 0
+            }
+            ability.dailyCapXp?.let { cap -> if (base > cap) base = cap }
 
+            val updated = qi.copy(
+                status = QuestStatus.DONE,
+                xpAwarded = base,
+                updatedAt = System.currentTimeMillis()
+            )
+            db.questInstanceDao().upsert(updated)
+
+            // Use XpService for idempotent awarding
+            val xpService = com.example.vampire_system.domain.xp.XpService(db)
+            xpService.awardForQuest(
+                date = qi.date,
+                type = LedgerType.AWARD,
+                delta = base,
+                qiId = qi.id,
+                abilityId = abilityId,
+                note = "award ${abilityId}"
+            )
+            return base
+        }
+    }
+
+    private suspend fun completeLevelTaskQuest(qiId: String, amount: Double): Int {
+        val qi = db.questInstanceDao().byId(qiId) ?: return 0
+        val templateId = qi.templateId ?: return 0
+        
+        // Get the level task to get its XP reward and category
+        val task = db.levelTaskDao().byId(templateId) ?: return 0
+        
+        android.util.Log.d("XpEngine", "Completing level task quest: ${qi.id}, templateId: ${templateId}, task: ${task.id}, category: ${task.category}, xpReward: ${task.xpReward}")
+        
+        // Use the task's XP reward
+        val base = task.xpReward.toInt()
+        
+        android.util.Log.d("XpEngine", "Awarding ${base} XP for level task quest completion")
+        
         val updated = qi.copy(
             status = QuestStatus.DONE,
             xpAwarded = base,
@@ -144,9 +191,11 @@ class XpEngine(
             type = LedgerType.AWARD,
             delta = base,
             qiId = qi.id,
-            abilityId = abilityId,
-            note = "award ${abilityId}"
+            abilityId = qi.abilityId,
+            note = "award task ${templateId}"
         )
+        
+        android.util.Log.d("XpEngine", "Successfully awarded ${base} XP for level task quest ${qi.id}")
         return base
     }
 

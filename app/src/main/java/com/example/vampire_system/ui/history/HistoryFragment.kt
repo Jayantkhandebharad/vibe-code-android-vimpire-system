@@ -1,10 +1,14 @@
 package com.example.vampire_system.ui.history
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.Pager
@@ -21,6 +25,8 @@ import com.example.vampire_system.data.db.XpLedgerEntity
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import androidx.navigation.fragment.findNavController
+
 
 class HistoryFragment : Fragment() {
     private var list: RecyclerView? = null
@@ -46,12 +52,99 @@ class HistoryFragment : Fragment() {
             adapter = this@HistoryFragment.adapter
         }
 
-        view.findViewById<Button>(R.id.btnAll)?.setOnClickListener { filter = null; bindPager() }
-        view.findViewById<Button>(R.id.btnAwards)?.setOnClickListener { filter = LedgerType.AWARD; bindPager() }
-        view.findViewById<Button>(R.id.btnBonus)?.setOnClickListener { filter = LedgerType.BONUS; bindPager() }
-        view.findViewById<Button>(R.id.btnPenalty)?.setOnClickListener { filter = LedgerType.PENALTY; bindPager() }
+        // Set up filter button
+        view.findViewById<Button>(R.id.btnFilter)?.setOnClickListener { showFilterMenu(it) }
+        
+        // Set up 3-dot menu button
+        view.findViewById<ImageButton>(R.id.btnMenu)?.setOnClickListener { showPopupMenu(it) }
+
+        // Set initial filter button text
+        updateFilterButtonText()
 
         bindPager()
+    }
+
+    private fun showFilterMenu(anchor: View) {
+        val popup = PopupMenu(requireContext(), anchor)
+        popup.menuInflater.inflate(R.menu.menu_filter, popup.menu)
+        
+        popup.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.filter_all -> {
+                    filter = null
+                    updateFilterButtonText()
+                    bindPager()
+                    true
+                }
+                R.id.filter_awards -> {
+                    filter = LedgerType.AWARD
+                    updateFilterButtonText()
+                    bindPager()
+                    true
+                }
+                R.id.filter_bonus -> {
+                    filter = LedgerType.BONUS
+                    updateFilterButtonText()
+                    bindPager()
+                    true
+                }
+                R.id.filter_penalty -> {
+                    filter = LedgerType.PENALTY
+                    updateFilterButtonText()
+                    bindPager()
+                    true
+                }
+                R.id.filter_adjustment -> {
+                    filter = LedgerType.ADJUSTMENT
+                    updateFilterButtonText()
+                    bindPager()
+                    true
+                }
+                R.id.filter_level_up -> {
+                    filter = LedgerType.LEVEL_UP
+                    updateFilterButtonText()
+                    bindPager()
+                    true
+                }
+                else -> false
+            }
+        }
+        
+        popup.show()
+    }
+    
+    private fun updateFilterButtonText() {
+        val filterButton = view?.findViewById<Button>(R.id.btnFilter)
+        filterButton?.text = when (filter) {
+            null -> "Filter: All"
+            LedgerType.AWARD -> "Filter: Awards"
+            LedgerType.BONUS -> "Filter: Bonus"
+            LedgerType.PENALTY -> "Filter: Penalty"
+            LedgerType.ADJUSTMENT -> "Filter: Adjustment"
+            LedgerType.LEVEL_UP -> "Filter: Level Up"
+        }
+    }
+    
+    private fun showPopupMenu(anchor: View) {
+        val popup = PopupMenu(requireContext(), anchor)
+        popup.menuInflater.inflate(R.menu.menu_history, popup.menu)
+        
+        popup.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_evidence -> {
+                    showEvidenceView()
+                    true
+                }
+                else -> false
+            }
+        }
+        
+        popup.show()
+    }
+    
+    private fun showEvidenceView() {
+        // Navigate to evidence fragment
+        findNavController().navigate(R.id.navigation_evidence)
     }
 
     private fun bindPager() {
@@ -104,5 +197,3 @@ class LedgerVH(v: View) : RecyclerView.ViewHolder(v) {
         tvSub.text = "${e.date} • ${e.type.name}"
     }
 }
-
-

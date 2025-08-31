@@ -96,6 +96,14 @@ class SearchIndexer(private val db: AppDatabase) {
                         )
                     }
                     EvidenceKind.TIMER, EvidenceKind.CHECKLIST -> { /* skip */ }
+                    // Handle all other evidence types as general content
+                    else -> items += SearchIndexEntity(
+                        date = date, kind = SearchKind.NOTE, // Treat as note for search purposes
+                        abilityId = null, questInstanceId = qi,
+                        title = "Evidence: ${kind.name.lowercase().replaceFirstChar { it.uppercase() }}",
+                        snippet = txt.take(140),
+                        text = txt
+                    )
                 }
             }
         }
@@ -111,6 +119,8 @@ class SearchIndexer(private val db: AppDatabase) {
             EvidenceKind.LINK -> SearchKind.LINK
             EvidenceKind.FILE, EvidenceKind.PHOTO, EvidenceKind.VIDEO, EvidenceKind.AUDIO -> SearchKind.FILE
             EvidenceKind.TIMER, EvidenceKind.CHECKLIST -> return@withContext
+            // Handle all other evidence types as notes for search purposes
+            else -> SearchKind.NOTE
         }
         val date = java.time.Instant.ofEpochMilli(e.createdAt)
             .atZone(java.time.ZoneId.systemDefault()).toLocalDate().toString()
@@ -120,9 +130,19 @@ class SearchIndexer(private val db: AppDatabase) {
             SearchIndexEntity(
                 date = date, kind = kind,
                 abilityId = null, questInstanceId = e.questInstanceId,
-                title = when (kind) { SearchKind.NOTE -> "Note"; SearchKind.LINK -> "Link"; else -> "File: ${name ?: "blob"}" },
-                snippet = when (kind) { SearchKind.NOTE, SearchKind.LINK -> e.uriOrText.take(140) ; else -> name },
-                text = when (kind) { SearchKind.NOTE, SearchKind.LINK -> e.uriOrText ; else -> (name ?: "") }
+                title = when (kind) { 
+                    SearchKind.NOTE -> "Note"; 
+                    SearchKind.LINK -> "Link"; 
+                    else -> "File: ${name ?: "blob"}" 
+                },
+                snippet = when (kind) { 
+                    SearchKind.NOTE, SearchKind.LINK -> e.uriOrText.take(140)
+                    else -> name 
+                },
+                text = when (kind) { 
+                    SearchKind.NOTE, SearchKind.LINK -> e.uriOrText
+                    else -> (name ?: "") 
+                }
             )
         ))
     }

@@ -16,6 +16,9 @@ object Converters {
     @TypeConverter fun fromAbilityGroup(v: AbilityGroup?): String? = v?.name
     @TypeConverter fun toAbilityGroup(s: String?): AbilityGroup? = s?.let { AbilityGroup.valueOf(it) }
 
+    @TypeConverter fun fromTaskCategory(v: TaskCategory?): String? = v?.name
+    @TypeConverter fun toTaskCategory(s: String?): TaskCategory? = s?.let { TaskCategory.valueOf(it) }
+
     @TypeConverter fun fromQuestKind(v: QuestKind?): String? = v?.name
     @TypeConverter fun toQuestKind(s: String?): QuestKind? = s?.let { QuestKind.valueOf(it) }
 

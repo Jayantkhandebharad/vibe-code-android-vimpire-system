@@ -34,6 +34,11 @@ class GalleryFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // Set up back button
+        view.findViewById<Button>(R.id.btnBack)?.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+        
         val grid = view.findViewById<RecyclerView>(R.id.grid)
         grid.setHasFixedSize(true)
         grid.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -43,6 +48,12 @@ class GalleryFragment : Fragment() {
             thumb = { thumbFor(it) }
         )
         grid.adapter = adapter
+        load()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh the evidence list when returning to this fragment
         load()
     }
 
@@ -74,6 +85,13 @@ class GalleryFragment : Fragment() {
                     )
                     .setPositiveButton("OK", null).show()
             }
+            // Handle all other evidence types as general content
+            else -> {
+                android.app.AlertDialog.Builder(requireContext())
+                    .setTitle(e.kind.name.lowercase().replaceFirstChar { it.uppercase() })
+                    .setMessage(e.uriOrText)
+                    .setPositiveButton("OK", null).show()
+            }
         }
     }
 
@@ -100,6 +118,13 @@ class GalleryFragment : Fragment() {
                     type = "text/plain"; putExtra(android.content.Intent.EXTRA_TEXT, text)
                 }
                 startActivity(android.content.Intent.createChooser(i, "Share"))
+            }
+            // Handle all other evidence types as text content
+            else -> {
+                val i = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                    type = "text/plain"; putExtra(android.content.Intent.EXTRA_TEXT, e.uriOrText)
+                }
+                startActivity(android.content.Intent.createChooser(i, "Share ${e.kind.name.lowercase()}"))
             }
         }
     }
@@ -135,6 +160,8 @@ class EviVH(v: View) : RecyclerView.ViewHolder(v) {
             EvidenceKind.NOTE  -> "Note"
             EvidenceKind.TIMER -> "Timer"
             EvidenceKind.CHECKLIST -> "Checklist"
+            // Handle all other evidence types with a generic label
+            else -> e.kind.name.lowercase().replaceFirstChar { it.uppercase() }
         }
         
         when (e.kind) {
@@ -153,6 +180,7 @@ class EviVH(v: View) : RecyclerView.ViewHolder(v) {
                     placeholder(R.drawable.ic_launcher_foreground)
                 }
             }
+            // Handle all other evidence types with default icon
             else -> img.setImageResource(R.drawable.ic_launcher_foreground)
         }
         

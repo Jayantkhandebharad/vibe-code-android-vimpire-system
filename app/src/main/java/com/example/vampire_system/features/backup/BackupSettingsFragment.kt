@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.vampire_system.R
 import com.example.vampire_system.data.db.AppDatabase
 import kotlinx.coroutines.*
@@ -31,6 +32,11 @@ class BackupSettingsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // Set up back button to navigate to notifications
+        view.findViewById<Button>(R.id.btnBack)?.setOnClickListener {
+            findNavController().navigate(R.id.navigation_notifications)
+        }
+        
         val tvFolder = view.findViewById<TextView>(R.id.tvFolder)
         val swEncrypt = view.findViewById<Switch>(R.id.swEncrypt)
         val etHint = view.findViewById<EditText>(R.id.etHint)

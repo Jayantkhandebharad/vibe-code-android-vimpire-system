@@ -31,7 +31,12 @@ class EvidenceBottomSheet : BottomSheetDialogFragment() {
     private val photoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { res ->
         if (res.resultCode == Activity.RESULT_OK) {
             pendingFile?.let { file ->
-                CoroutineScope(Dispatchers.IO).launch { mgr.savePhoto(qi, file) }
+                CoroutineScope(Dispatchers.IO).launch { 
+                    mgr.savePhoto(qi, file)
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), "Photo saved!", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }
@@ -44,7 +49,12 @@ class EvidenceBottomSheet : BottomSheetDialogFragment() {
     }
     private val pickFile = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
         uri ?: return@registerForActivityResult
-        CoroutineScope(Dispatchers.IO).launch { mgr.importFromUri(qi, uri) }
+        CoroutineScope(Dispatchers.IO).launch { 
+            mgr.importFromUri(qi, uri)
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireContext(), "File saved!", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -54,7 +64,12 @@ class EvidenceBottomSheet : BottomSheetDialogFragment() {
             val input = v.findViewById<EditText>(R.id.txtNote)
             val text = input.text?.toString()?.trim().orEmpty()
             if (text.isNotEmpty()) {
-                CoroutineScope(Dispatchers.IO).launch { mgr.addText(qi, text) }
+                CoroutineScope(Dispatchers.IO).launch { 
+                    mgr.addText(qi, text)
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), "Note saved!", Toast.LENGTH_SHORT).show()
+                    }
+                }
                 input.setText("")
                 dismiss()
             } else Toast.makeText(requireContext(),"Write a note first",Toast.LENGTH_SHORT).show()
@@ -64,7 +79,12 @@ class EvidenceBottomSheet : BottomSheetDialogFragment() {
             val input = v.findViewById<EditText>(R.id.txtLink)
             val url = input.text?.toString()?.trim().orEmpty()
             if (url.isNotEmpty()) {
-                CoroutineScope(Dispatchers.IO).launch { mgr.addLink(qi, url) }
+                CoroutineScope(Dispatchers.IO).launch { 
+                    mgr.addLink(qi, url)
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), "Link saved!", Toast.LENGTH_SHORT).show()
+                    }
+                }
                 input.setText("")
                 dismiss()
             } else Toast.makeText(requireContext(),"Paste a link",Toast.LENGTH_SHORT).show()

@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:padding="12dp"
+    android:orientation="vertical" android:padding="8dp"
     android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <!-- Header with back button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp"
+        android:paddingHorizontal="8dp">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Back"
+            android:textSize="14sp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            style="@style/Widget.Material3.Button.TextButton" />
+
+        <TextView
+            android:text="Admin Studio"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent" android:layout_height="wrap_content">
-        <Button android:id="@+id/btnTabAbilities" android:text="Abilities"/>
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp">
+        <Button 
+            android:id="@+id/btnTabAbilities" 
+            android:text="Abilities"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
         <Space android:layout_width="12dp" android:layout_height="0dp"/>
-        <Button android:id="@+id/btnTabTasks" android:text="Level Tasks"/>
+        <Button 
+            android:id="@+id/btnTabTasks" 
+            android:text="Level Tasks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <FrameLayout

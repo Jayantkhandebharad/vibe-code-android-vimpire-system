@@ -20,29 +20,32 @@ class QuestEngine(
 
         val foundationIds = Xp.FOUNDATIONS
 
-        val extraCount = when {
-            level >= 20 -> 4
-            level >= 10 -> 3
-            else -> 2
-        }
         val extras: List<String> = if (unlocked) {
-            val pool = db.abilityDao().getAllOnce()
+            // Show ALL unlocked abilities for the current level, not just random ones
+            db.abilityDao().getAllOnce()
                 .filter { it.group != AbilityGroup.FOUNDATIONS && it.unlockLevel <= level }
                 .map { it.id }
                 .sorted()
-            val seed = (date.hashCode() * 31 + level).toLong()
-            val rnd = java.util.Random(seed)
-            pool.shuffled(rnd).take(extraCount)
         } else emptyList()
 
-        val taskIds = db.levelTaskDao().forLevel(level).map { "QI_${date}_${it.id}" }
+        // Get level tasks for current level AND previous levels (to keep important tasks available)
+        val currentLevelTasks = db.levelTaskDao().forLevel(level)
+        val previousLevelTasks = (1 until level).flatMap { prevLevel ->
+            db.levelTaskDao().forLevelOnce(prevLevel)
+        }
+        val allRelevantTasks = currentLevelTasks + previousLevelTasks
+        
+        val taskIds = allRelevantTasks.map { "QI_${date}_${it.id}" }
 
         val abilityIds = (foundationIds + extras)
         val targetAbilityQiIds = abilityIds.map { "QI_${date}_${it}" }
         val targetIds = (targetAbilityQiIds + taskIds).toSet()
 
         abilityIds.forEach { ensureQuestForAbility(it, level, date, daily = true) }
-        db.levelTaskDao().forLevel(level).forEach { ensureAdHocTask(it, level, date) }
+        allRelevantTasks.forEach { task ->
+            android.util.Log.d("QuestEngine", "Creating quest for level task: ${task.id} (level ${task.levelId})")
+            ensureAdHocTask(task, level, date)
+        }
 
         val existing = db.questInstanceDao().listForDate(date)
         val pendingStrays = existing.filter { it.status == QuestStatus.PENDING && it.id !in targetIds }.map { it.id }
@@ -82,21 +85,22 @@ class QuestEngine(
 
     private suspend fun ensureAdHocTask(task: LevelTaskEntity, level: Int, date: String) {
         val id = "QI_${date}_${task.id}"
+        android.util.Log.d("QuestEngine", "Ensuring ad-hoc task quest: $id for task: ${task.id}")
         val existing = db.questInstanceDao().byId(id)
         if (existing == null) {
-            db.questInstanceDao().upsert(
-                QuestInstanceEntity(
-                    id = id,
-                    date = date,
-                    levelId = level,
-                    templateId = task.id,
-                    abilityId = task.abilityId,
-                    status = QuestStatus.PENDING,
-                    xpAwarded = 0,
-                    createdAt = System.currentTimeMillis(),
-                    updatedAt = System.currentTimeMillis()
-                )
+            val questEntity = QuestInstanceEntity(
+                id = id,
+                date = date,
+                levelId = level,
+                templateId = task.id,
+                abilityId = task.abilityId,
+                status = QuestStatus.PENDING,
+                xpAwarded = 0, // XP should be 0 until quest is completed
+                createdAt = System.currentTimeMillis(),
+                updatedAt = System.currentTimeMillis()
             )
+            db.questInstanceDao().upsert(questEntity)
+            android.util.Log.d("QuestEngine", "Created quest instance: $id with templateId: ${task.id}, abilityId: ${task.abilityId}, category: ${task.category}, xpReward: ${task.xpReward}, xpAwarded: ${questEntity.xpAwarded} (will be set when completed)")
             // Seed stage items from task.acceptance (one checkbox per acceptance line)
             val existingStages = db.stageDao().forQuest(id)
             if (existingStages.isEmpty()) {

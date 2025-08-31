@@ -1,7 +1,9 @@
 package com.example.vampire_system.ui.home
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -15,6 +17,7 @@ import com.example.vampire_system.features.today.QuestAdapter
 import com.example.vampire_system.domain.repo.LevelRepo
 import com.example.vampire_system.domain.engine.QuestEngine
 import com.example.vampire_system.util.Dates
+
 import kotlinx.coroutines.*
 import androidx.activity.result.contract.ActivityResultContracts
 import kotlinx.coroutines.flow.first
@@ -46,7 +49,45 @@ class HomeFragment : Fragment() {
                 if (item.status == com.example.vampire_system.data.model.QuestStatus.PENDING) {
                     val abilityId = item.abilityId
                     if (abilityId == null) {
-                        CoroutineScope(Dispatchers.IO).launch { xpEngine.completeQuest(item.id, 1.0) }
+                        // This is a level task (no ability associated)
+                        // For level tasks, we need to handle them differently since they don't have XP rules
+                        android.util.Log.d("HomeFragment", "Handling quest without abilityId: ${item.id}")
+                        CoroutineScope(Dispatchers.IO).launch {
+                            try {
+                                // Get the quest instance to check if it's a level task
+                                val qi = db.questInstanceDao().byId(item.id)
+                                android.util.Log.d("HomeFragment", "Found quest instance: ${qi?.templateId}, abilityId: ${qi?.abilityId}")
+                                if (qi?.templateId != null) {
+                                    // This is a level task, use XpEngine to get the correct XP reward
+                                    android.util.Log.d("HomeFragment", "Completing level task: ${qi.templateId}")
+                                    try {
+                                        val xpAwarded = xpEngine.completeQuest(qi.id, 1.0)
+                                        android.util.Log.d("HomeFragment", "Successfully completed level task: ${qi.templateId} with ${xpAwarded} XP")
+                                        
+                                        // Show success message to user
+                                        withContext(Dispatchers.Main) {
+                                            android.widget.Toast.makeText(requireContext(), "Task completed! +${xpAwarded} XP", android.widget.Toast.LENGTH_SHORT).show()
+                                        }
+                                        
+                                        // Refresh the quests to show updated status
+                                        vm.refreshQuests()
+                                    } catch (e: Exception) {
+                                        android.util.Log.e("HomeFragment", "Error completing level task", e)
+                                        // Fallback: use the old method
+                                        xpEngine.completeQuest(qi.id, 1.0)
+                                    }
+                                } else {
+                                    // Fallback: use the old method
+                                    android.util.Log.w("HomeFragment", "Quest has no abilityId and no templateId, using fallback")
+                                    android.util.Log.d("HomeFragment", "Completing quest with fallback method: ${item.id}")
+                                    xpEngine.completeQuest(item.id, 1.0)
+                                }
+                            } catch (e: Exception) {
+                                android.util.Log.e("HomeFragment", "Error in level task handling", e)
+                                // Fallback: use the old method
+                                xpEngine.completeQuest(item.id, 1.0)
+                            }
+                        }
                     } else {
                         CoroutineScope(Dispatchers.IO).launch {
                             val ability = db.abilityDao().byId(abilityId)
@@ -120,6 +161,16 @@ class HomeFragment : Fragment() {
         list.adapter = adapter
 
         vm.quests.observe(viewLifecycleOwner) { items -> adapter.submitList(items) }
+        
+        // Listen for task added events and refresh quests automatically
+        com.example.vampire_system.util.EventBus.taskAddedEvent.observe(viewLifecycleOwner) { taskAdded ->
+            if (taskAdded) {
+                // A new task was added, refresh the quests
+                vm.refreshQuests()
+                // Clear the event
+                com.example.vampire_system.util.EventBus.clearTaskAddedEvent()
+            }
+        }
 
         view.findViewById<Button>(R.id.btnGenerate).setOnClickListener {
             // regenerate today
@@ -132,15 +183,43 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), "Generated/Refreshed", Toast.LENGTH_SHORT).show()
         }
 
-        view.findViewById<Button>(R.id.btnQuickFoundations).setOnClickListener { v ->
-            // Debounce to prevent rapid taps
-            v.isEnabled = false
-            // pushups, reading, notes quick XP
-            vm.quickFoundationXp("pushups")
-            vm.quickFoundationXp("reading")
-            vm.quickFoundationXp("notes")
-            Toast.makeText(requireContext(), "Quick foundations logged", Toast.LENGTH_SHORT).show()
-            v.postDelayed({ v.isEnabled = true }, 2000) // 2 second debounce for this bulk action
+        view.findViewById<Button>(R.id.btnRefreshQuests).setOnClickListener {
+            // Refresh quests to show any new level tasks
+            vm.refreshQuests()
+            Toast.makeText(requireContext(), "Quests refreshed", Toast.LENGTH_SHORT).show()
+        }
+
+
+
+        // Add button to check core gate status
+        view.findViewById<Button>(R.id.btnCheckCoreGate)?.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val status = vm.getCoreGateStatus()
+                    withContext(Dispatchers.Main) {
+                        val msg = buildString {
+                            append("Level: ${status.level}\n")
+                            append("Core Gate: ${if (status.unlocked) "UNLOCKED ✅" else "LOCKED 🔒"}\n")
+                            append("Foundations completed today: ${status.foundationCount}/5\n")
+                            append("\nWalk/Run unlocks at Level 3 (you're at ${status.level})\n")
+                            if (status.unlocked) {
+                                append("✅ You can access extra abilities!")
+                            } else {
+                                append("🔒 Complete 3+ foundations for 2 days OR all 5 in one day to unlock extras")
+                            }
+                        }
+                        android.app.AlertDialog.Builder(requireContext())
+                            .setTitle("Core Gate Status")
+                            .setMessage(msg)
+                            .setPositiveButton("OK", null)
+                            .show()
+                    }
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        android.widget.Toast.makeText(requireContext(), "Error getting core gate status: ${e.message}", android.widget.Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
         }
 
         // quick permissive permissions request for camera + mic

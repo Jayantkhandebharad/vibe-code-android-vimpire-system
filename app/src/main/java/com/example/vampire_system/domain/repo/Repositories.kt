@@ -55,6 +55,18 @@ class LevelRepo(private val db: AppDatabase) {
         )
         lpDao.upsert(lp)
     }
+
+    suspend fun updateXpInLevel(xpInLevel: Int) {
+        val current = getCurrent()
+        val lp = LevelProgressEntity(
+            id = 1,
+            levelId = current.levelId,
+            xpInLevel = xpInLevel,
+            startedAtDate = current.startedAtDate,
+            updatedAt = System.currentTimeMillis()
+        )
+        lpDao.upsert(lp)
+    }
 }
 
 class AbilityRepo(private val db: AppDatabase) {

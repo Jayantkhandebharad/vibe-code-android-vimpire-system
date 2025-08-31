@@ -16,7 +16,7 @@ import androidx.room.TypeConverters
         XpLedgerEntity::class, StageItemEntity::class,
         LevelMilestoneEntity::class, SearchIndexEntity::class, SavedSearchEntity::class
     ],
-    version = 10,
+    version = 12,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
@@ -300,6 +300,30 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_10_11 = object : androidx.room.migration.Migration(10, 11) {
+            override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                // Add category column to level_tasks table with default value 'KNOWLEDGE'
+                db.execSQL("ALTER TABLE level_tasks ADD COLUMN category TEXT NOT NULL DEFAULT 'KNOWLEDGE'")
+                
+                // Ensure any remaining old indices are cleaned up and correct ones exist
+                // This handles cases where users might have skipped some migrations
+                db.execSQL("DROP INDEX IF EXISTS idx_search_date")
+                db.execSQL("DROP INDEX IF EXISTS idx_search_kind") 
+                db.execSQL("DROP INDEX IF EXISTS idx_search_ability")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_search_index_date ON search_index(date)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_search_index_kind ON search_index(kind)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_search_index_abilityId ON search_index(abilityId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_search_index_questInstanceId ON search_index(questInstanceId)")
+            }
+        }
+
+        private val MIGRATION_11_12 = object : androidx.room.migration.Migration(11, 12) {
+            override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                // Add xpReward column to level_tasks table with default value 10.0
+                db.execSQL("ALTER TABLE level_tasks ADD COLUMN xpReward REAL NOT NULL DEFAULT 10.0")
+            }
+        }
+
         fun get(context: Context): AppDatabase =
             INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
@@ -308,7 +332,7 @@ abstract class AppDatabase : RoomDatabase() {
                     "vampire.db"
                 )
                 .setJournalMode(RoomDatabase.JournalMode.WRITE_AHEAD_LOGGING)
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12)
                 .addCallback(object : RoomDatabase.Callback() {
                     override fun onCreate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
                         super.onCreate(db)
@@ -342,10 +366,11 @@ abstract class AppDatabase : RoomDatabase() {
                                 END;
                             """.trimIndent()
                         )
-                        // Helpful indexes
-                        db.execSQL("CREATE INDEX IF NOT EXISTS idx_search_kind ON search_index(kind)")
-                        db.execSQL("CREATE INDEX IF NOT EXISTS idx_search_date ON search_index(date)")
-                        db.execSQL("CREATE INDEX IF NOT EXISTS idx_search_ability ON search_index(abilityId)")
+                        // Helpful indexes - use correct naming convention to match entity definitions
+                        db.execSQL("CREATE INDEX IF NOT EXISTS index_search_index_kind ON search_index(kind)")
+                        db.execSQL("CREATE INDEX IF NOT EXISTS index_search_index_date ON search_index(date)")
+                        db.execSQL("CREATE INDEX IF NOT EXISTS index_search_index_abilityId ON search_index(abilityId)")
+                        db.execSQL("CREATE INDEX IF NOT EXISTS index_search_index_questInstanceId ON search_index(questInstanceId)")
                     }
                 })
                 .build().also { INSTANCE = it }

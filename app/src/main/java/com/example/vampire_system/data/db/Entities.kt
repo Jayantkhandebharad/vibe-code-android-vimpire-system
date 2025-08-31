@@ -39,7 +39,9 @@ data class LevelTaskEntity(
     val levelId: Int,
     val abilityId: String?,
     val spec: String,
-    val acceptance: List<String>
+    val acceptance: List<String>,
+    val category: TaskCategory,
+    val xpReward: Double = 10.0
 )
 
 @Entity(tableName = "quest_templates")

@@ -15,6 +15,8 @@ interface AbilityDao {
     suspend fun upsert(item: AbilityEntity)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertAll(items: List<AbilityEntity>)
+    @Query("DELETE FROM abilities")
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -25,6 +27,8 @@ interface LevelDao {
     suspend fun byId(id: Int): LevelEntity?
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertAll(items: List<LevelEntity>)
+    @Query("DELETE FROM levels")
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -33,12 +37,18 @@ interface LevelTaskDao {
     suspend fun forLevel(levelId: Int): List<LevelTaskEntity>
     @Query("SELECT * FROM level_tasks WHERE levelId = :level ORDER BY id")
     suspend fun forLevelOnce(level: Int): List<LevelTaskEntity>
+    @Query("SELECT * FROM level_tasks")
+    suspend fun getAllOnce(): List<LevelTaskEntity>
+    @Query("SELECT * FROM level_tasks WHERE id = :id")
+    suspend fun byId(id: String): LevelTaskEntity?
     @Query("DELETE FROM level_tasks WHERE id = :id")
     suspend fun deleteById(id: String)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(item: LevelTaskEntity)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertAll(items: List<LevelTaskEntity>)
+    @Query("DELETE FROM level_tasks")
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -61,8 +71,12 @@ interface QuestInstanceDao {
     suspend fun deletePendingNotIn(date: String, keepIds: List<String>)
     @Query("SELECT * FROM quest_instances WHERE id = :id")
     suspend fun byId(id: String): QuestInstanceEntity?
+    @Query("SELECT * FROM quest_instances WHERE id = :id")
+    suspend fun byIdOnce(id: String): QuestInstanceEntity?
     @Query("SELECT * FROM quest_instances")
     suspend fun rawAll(): List<QuestInstanceEntity>
+    @Query("SELECT * FROM quest_instances WHERE status = 'DONE'")
+    suspend fun getCompleted(): List<QuestInstanceEntity>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(item: QuestInstanceEntity)
     @Update suspend fun update(item: QuestInstanceEntity)
@@ -130,6 +144,9 @@ interface XpLedgerDao {
 
     @Query("SELECT * FROM xp_ledger ORDER BY date DESC, createdAt DESC")
     fun pagingAll(): androidx.paging.PagingSource<Int, XpLedgerEntity>
+
+    @Query("SELECT * FROM xp_ledger ORDER BY date DESC, createdAt DESC")
+    suspend fun getAllOnce(): List<XpLedgerEntity>
 
     @Query("SELECT * FROM xp_ledger WHERE type = :type ORDER BY date DESC, createdAt DESC")
     fun pagingByType(type: LedgerType): androidx.paging.PagingSource<Int, XpLedgerEntity>

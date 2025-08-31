@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.vampire_system.R
 import com.example.vampire_system.data.db.AppDatabase
 import com.example.vampire_system.features.today.RolloverWorker
@@ -19,6 +20,11 @@ class SettingsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // Set up back button to navigate to notifications
+        view.findViewById<Button>(R.id.btnBack)?.setOnClickListener {
+            findNavController().navigate(R.id.navigation_notifications)
+        }
+        
         val etHour = view.findViewById<EditText>(R.id.etResetHour)
         val etTz = view.findViewById<EditText>(R.id.etTimezone)
         val etW = view.findViewById<EditText>(R.id.etWeight)

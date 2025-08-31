@@ -39,6 +39,11 @@ class VampireApp : Application() {
         
         val db = AppDatabase.get(this)
         CoroutineScope(Dispatchers.IO).launch {
+            // DEBUG: Test XP progression on app start
+            println("=== APP START: XP PROGRESSION TEST ===")
+            com.example.vampire_system.data.model.Xp.debugXpProgression()
+            println("=== END APP START TEST ===")
+            
             PlanSeeder.seedIfEmpty(db)
             com.example.vampire_system.data.seed.MilestoneSeeder.seedIfEmpty(db)
             

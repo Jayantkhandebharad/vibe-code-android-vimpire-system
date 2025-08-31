@@ -5,20 +5,92 @@
       android:orientation="vertical" android:padding="12dp"
       android:layout_width="match_parent" android:layout_height="wrap_content">
 
-    <TextView android:text="Task ID (stable, unique)"/>
-    <EditText android:id="@+id/etId"/>
+    <TextView android:text="Task ID (stable, unique)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"/>
+    <EditText android:id="@+id/etId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:drawable/edit_text"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"/>
 
-    <TextView android:text="Ability ID (optional, e.g., ship, gym)"/>
-    <EditText android:id="@+id/etAbilityId"/>
+    <TextView android:text="Ability ID (optional, e.g., ship, gym)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"/>
+    <EditText android:id="@+id/etAbilityId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:drawable/edit_text"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"/>
 
-    <TextView android:text="Spec (what to do)"/>
-    <EditText android:id="@+id/etSpec"/>
+    <TextView android:text="Category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"/>
+    <Spinner android:id="@+id/spinnerCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:drawable/edit_text"/>
 
-    <TextView android:text="Acceptance (one per line)"/>
+    <TextView android:text="Spec (what to do)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"/>
+    <EditText android:id="@+id/etSpec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:drawable/edit_text"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"/>
+
+    <TextView android:text="Acceptance (one per line)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"/>
     <EditText android:id="@+id/etAcceptance"
-        android:inputType="textMultiLine" android:minLines="4"/>
+        android:inputType="textMultiLine" 
+        android:minLines="4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:drawable/edit_text"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"/>
 
-    <Button android:id="@+id/btnSave" android:text="Save"/>
+    <TextView android:text="XP Reward"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"/>
+    <EditText android:id="@+id/etXpReward"
+        android:inputType="numberDecimal"
+        android:hint="Enter XP amount (e.g., 13 or 13.0) - Required!"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:drawable/edit_text"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"/>
+
+    <Button android:id="@+id/btnSave" 
+        android:text="Save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"/>
   </LinearLayout>
 </ScrollView>
 

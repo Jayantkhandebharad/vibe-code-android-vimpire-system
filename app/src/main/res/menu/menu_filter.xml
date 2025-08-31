@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/filter_all"
+        android:title="All"
+        android:icon="@android:drawable/ic_menu_view" />
+    
+    <item
+        android:id="@+id/filter_awards"
+        android:title="Awards"
+        android:icon="@android:drawable/ic_menu_gallery" />
+    
+    <item
+        android:id="@+id/filter_bonus"
+        android:title="Bonus"
+        android:icon="@android:drawable/ic_menu_add" />
+    
+    <item
+        android:id="@+id/filter_penalty"
+        android:title="Penalty"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel" />
+    
+    <item
+        android:id="@+id/filter_adjustment"
+        android:title="Adjustment"
+        android:icon="@android:drawable/ic_menu_edit" />
+    
+    <item
+        android:id="@+id/filter_level_up"
+        android:title="Level Up"
+        android:icon="@android:drawable/ic_menu_upload" />
+</menu>

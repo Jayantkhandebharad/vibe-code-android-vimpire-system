@@ -1,48 +1,545 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent">
+    
     <LinearLayout
-        android:orientation="vertical" android:padding="12dp"
-        android:layout_width="match_parent" android:layout_height="wrap_content">
+        android:orientation="vertical" 
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="12dp"
+        android:paddingTop="4dp"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content">
 
-        <TextView android:text="Profile" android:textStyle="bold" android:textSize="18sp"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView 
+            android:text="Profile" 
+            android:textStyle="bold" 
+            android:textSize="18sp"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"/>
 
-        <TextView android:id="@+id/tvWeight" android:text="Weight: -"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <TextView android:id="@+id/tvProtein" android:text="Protein target: -"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <TextView android:id="@+id/tvTz" android:text="Timezone: -"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <TextView android:id="@+id/tvReset" android:text="Reset hour: 05:00"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView 
+            android:id="@+id/tvWeight" 
+            android:text="Weight: -"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"/>
+            
+        <TextView 
+            android:id="@+id/tvProtein" 
+            android:text="Protein target: -"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"/>
+            
+        <TextView 
+            android:id="@+id/tvTz" 
+            android:text="Timezone: -"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"/>
+            
+        <TextView 
+            android:id="@+id/tvReset" 
+            android:text="Reset hour: 05:00"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"/>
 
-        <Button android:id="@+id/btnEdit" android:text="Edit Profile"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <Button 
+            android:id="@+id/btnEdit" 
+            android:text="Edit Profile"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"/>
 
-        <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+        <Space 
+            android:layout_width="match_parent" 
+            android:layout_height="12dp"/>
 
-        <TextView android:text="Weekly meters" android:textStyle="bold"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <TextView android:id="@+id/meterStrengthLabel" android:text="Strength (Fitness)"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <ProgressBar android:id="@+id/meterStrength" style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent" android:layout_height="10dp" android:max="150"/>
+        <TextView 
+            android:text="Weekly meters" 
+            android:textStyle="bold"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"/>
+            
+        <TextView 
+            android:id="@+id/meterStrengthLabel" 
+            android:text="Strength &amp; Fitness"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+            
+        <ProgressBar 
+            android:id="@+id/meterStrength" 
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent" 
+            android:layout_height="10dp" 
+            android:max="200"/>
 
-        <TextView android:id="@+id/meterKnowledgeLabel" android:text="Knowledge (GenAI)"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <ProgressBar android:id="@+id/meterKnowledge" style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent" android:layout_height="10dp" android:max="200"/>
+        <TextView 
+            android:id="@+id/meterKnowledgeLabel" 
+            android:text="Knowledge &amp; GenAI"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+            
+        <ProgressBar 
+            android:id="@+id/meterKnowledge" 
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent" 
+            android:layout_height="10dp" 
+            android:max="300"/>
 
-        <TextView android:id="@+id/meterCommLabel" android:text="Communication"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <ProgressBar android:id="@+id/meterComm" style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent" android:layout_height="10dp" android:max="100"/>
+        <TextView 
+            android:id="@+id/meterCommLabel" 
+            android:text="Communication &amp; Social"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+            
+        <ProgressBar 
+            android:id="@+id/meterComm" 
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent" 
+            android:layout_height="10dp" 
+            android:max="150"/>
 
-        <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+        <TextView 
+            android:id="@+id/meterSocialLabel" 
+            android:text="Social &amp; Community"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+            
+        <ProgressBar 
+            android:id="@+id/meterSocial" 
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent" 
+            android:layout_height="10dp" 
+            android:max="150"/>
 
-        <TextView android:id="@+id/tvPenalties" android:text="Penalties (7d): 0 (0 XP)"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView 
+            android:id="@+id/meterLifestyleLabel" 
+            android:text="Lifestyle &amp; Wellness"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+            
+        <ProgressBar 
+            android:id="@+id/meterLifestyle" 
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent" 
+            android:layout_height="10dp" 
+            android:max="150"/>
+
+        <Space 
+            android:layout_width="match_parent" 
+            android:layout_height="12dp"/>
+
+        <!-- All-Time XP Distribution -->
+        <TextView 
+            android:text="All-Time XP Distribution" 
+            android:textStyle="bold"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+        
+        <!-- Strength (Fitness) All-Time -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Strength (Fitness)" 
+                android:textStyle="bold"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            
+            <TextView 
+                android:id="@+id/tvStrengthTotal" 
+                android:text="0 XP"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="14sp" 
+                android:textColor="#333333"/>
+        </LinearLayout>
+        
+        <!-- Knowledge (GenAI) All-Time -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Knowledge (GenAI)" 
+                android:textStyle="bold"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            
+            <TextView 
+                android:id="@+id/tvKnowledgeTotal" 
+                android:text="0 XP"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="14sp" 
+                android:textColor="#333333"/>
+        </LinearLayout>
+        
+        <!-- Communication All-Time -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Communication" 
+                android:textStyle="bold"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            
+            <TextView 
+                android:id="@+id/tvCommunicationTotal" 
+                android:text="0 XP"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="14sp" 
+                android:textColor="#333333"/>
+        </LinearLayout>
+        
+        <!-- Social All-Time -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Social" 
+                android:textStyle="bold"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            
+            <TextView 
+                android:id="@+id/tvSocialTotal" 
+                android:text="0 XP"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="14sp" 
+                android:textColor="#333333"/>
+        </LinearLayout>
+        
+        <!-- Lifestyle All-Time -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Lifestyle" 
+                android:textStyle="bold"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            
+            <TextView 
+                android:id="@+id/tvLifestyleTotal" 
+                android:text="0 XP"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="14sp" 
+                android:textColor="#333333"/>
+        </LinearLayout>
+        
+        <!-- Miscellaneous Category -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Miscellaneous" 
+                android:textStyle="bold"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            
+            <TextView 
+                android:id="@+id/tvMiscellaneousTotal" 
+                android:text="0 XP"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="14sp" 
+                android:textColor="#333333"/>
+        </LinearLayout>
+
+        <!-- All-Time XP Pie Chart -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Visual Distribution" 
+                android:textStyle="bold"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+            
+            <TextView 
+                android:id="@+id/tvAllTimeTotal" 
+                android:text="Total: 0 XP" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:textSize="12sp" 
+                android:textColor="#666666"/>
+        </LinearLayout>
+        
+        <!-- Radar Chart for All-Time XP Categories -->
+        <com.example.vampire_system.ui.profile.SimpleRadarChart
+            android:id="@+id/radarChartAllTime"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginTop="8dp"/>
+
+        <Space 
+            android:layout_width="match_parent" 
+            android:layout_height="12dp"/>
+
+        <TextView 
+            android:text="XP Contributions by Category (Radar Chart)" 
+            android:textStyle="bold"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+        
+        <!-- Awards Category -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Awards" 
+                android:textStyle="bold"
+                android:layout_width="80dp" 
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            
+            <ProgressBar 
+                android:id="@+id/meterAwards" 
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp" 
+                android:layout_height="8dp" 
+                android:layout_weight="1"
+                android:layout_marginStart="8dp" 
+                android:layout_marginEnd="8dp"/>
+            
+            <TextView 
+                android:id="@+id/tvAwardsTotal" 
+                android:text="0 XP"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="12sp" 
+                android:textColor="#666666"/>
+        </LinearLayout>
+        
+        <!-- Bonus Category -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Bonus" 
+                android:textStyle="bold"
+                android:layout_width="80dp" 
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            
+            <ProgressBar 
+                android:id="@+id/meterBonus" 
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp" 
+                android:layout_height="8dp" 
+                android:layout_weight="1"
+                android:layout_marginStart="8dp" 
+                android:layout_marginEnd="8dp"/>
+            
+            <TextView 
+                android:id="@+id/tvBonusTotal" 
+                android:text="0 XP"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="12sp" 
+                android:textColor="#666666"/>
+        </LinearLayout>
+        
+        <!-- Penalty Category -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Penalty" 
+                android:textStyle="bold"
+                android:layout_width="80dp" 
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            
+            <ProgressBar 
+                android:id="@+id/meterPenalty" 
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp" 
+                android:layout_height="8dp" 
+                android:layout_weight="1"
+                android:layout_marginStart="8dp" 
+                android:layout_marginEnd="8dp"/>
+            
+            <TextView 
+                android:id="@+id/tvPenaltyTotal" 
+                android:text="0 XP"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="12sp" 
+                android:textColor="#666666"/>
+        </LinearLayout>
+        
+        <!-- Adjustment Category -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Adjustment" 
+                android:textStyle="bold"
+                android:layout_width="80dp" 
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            
+            <ProgressBar 
+                android:id="@+id/meterAdjustment" 
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp" 
+                android:layout_height="8dp" 
+                android:layout_weight="1"
+                android:layout_marginStart="8dp" 
+                android:layout_marginEnd="8dp"/>
+            
+            <TextView 
+                android:id="@+id/tvAdjustmentTotal" 
+                android:text="0 XP"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="12sp" 
+                android:textColor="#666666"/>
+        </LinearLayout>
+        
+        <!-- Level Up Category -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Level Up" 
+                android:textStyle="bold"
+                android:layout_width="80dp" 
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            
+            <ProgressBar 
+                android:id="@+id/meterLevelUp" 
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp" 
+                android:layout_height="8dp" 
+                android:layout_weight="1"
+                android:layout_marginStart="8dp" 
+                android:layout_marginEnd="8dp"/>
+            
+            <TextView 
+                android:id="@+id/tvLevelUpTotal" 
+                android:text="0 XP"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="12sp" 
+                android:textColor="#666666"/>
+        </LinearLayout>
+        
+        <!-- Total XP Display -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical">
+            
+            <TextView 
+                android:text="Total XP" 
+                android:textStyle="bold"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:textSize="16sp"/>
+            
+            <TextView 
+                android:id="@+id/tvTotalXP" 
+                android:text="0 XP"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="16sp" 
+                android:textColor="#333333"/>
+        </LinearLayout>
+
+        <Space 
+            android:layout_width="match_parent" 
+            android:layout_height="12dp"/>
+
+        <TextView 
+            android:id="@+id/tvPenalties" 
+            android:text="Penalties (7d): 0 (0 XP)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"/>
+            
     </LinearLayout>
 </ScrollView>
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" 
     android:padding="8dp"
     android:layout_width="match_parent" 
@@ -33,20 +32,18 @@
             android:textColor="?android:attr/textColorPrimary"
             android:textColorHint="?android:attr/textColorSecondary"/>
             
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btnLoad" 
             android:text="Load"
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            style="@style/Widget.Vampire.Button"/>
+            android:layout_marginEnd="8dp"/>
             
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btnNew" 
             android:text="New Task"
             android:layout_width="wrap_content" 
-            android:layout_height="wrap_content"
-            style="@style/Widget.Vampire.Button"/>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -58,5 +55,3 @@
         android:overScrollMode="never"/>
 
 </LinearLayout>
-
-

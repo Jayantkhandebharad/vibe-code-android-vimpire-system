@@ -112,4 +112,7 @@ dependencies {
     androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.espresso.core)
+    
+    // Charts
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

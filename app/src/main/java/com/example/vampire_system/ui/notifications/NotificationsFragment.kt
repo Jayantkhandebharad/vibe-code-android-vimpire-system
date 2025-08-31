@@ -1,7 +1,9 @@
 package com.example.vampire_system.ui.notifications
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -32,7 +34,7 @@ class NotificationsFragment : Fragment() {
                 java.time.LocalDate.parse(Dates.todayLocal()).minusDays(1).toString()
             )
             val text = if (s == null) "No summary yet"
-            else "Last Summary: xpRaw=${'$'}{s.xpRaw} bonus=${'$'}{s.xpBonus} penalty=${'$'}{s.xpPenalty} net=${'$'}{s.xpNet} (L${'$'}{s.levelId})"
+            else "Last Summary: ${s.xpNet} XP (Level ${s.levelId})"
             CoroutineScope(Dispatchers.Main).launch { lbl.text = text }
         }
 

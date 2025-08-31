@@ -8,8 +8,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
 import com.example.vampire_system.R
 import com.example.vampire_system.data.db.AppDatabase
+import kotlinx.coroutines.launch
 
 class DashboardFragment : Fragment() {
 
@@ -32,6 +34,8 @@ class DashboardFragment : Fragment() {
         val xpBar = view.findViewById<ProgressBar>(R.id.xpBar)
         val xpText = view.findViewById<TextView>(R.id.xpText)
         val counts = view.findViewById<TextView>(R.id.counts)
+        
+        // Set up button click listeners
         view.findViewById<Button>(R.id.btnRefresh).setOnClickListener { vm.refresh() }
         view.findViewById<Button>(R.id.btnRoadmap).setOnClickListener {
             findNavController().navigate(R.id.navigation_roadmap)
@@ -43,6 +47,9 @@ class DashboardFragment : Fragment() {
             xpBar.progress = s.xpInLevel.coerceAtMost(s.xpRequired)
             xpText.text = "${s.xpInLevel} / ${s.xpRequired} XP"
             counts.text = "${s.pendingQuests} pending • ${s.doneQuests} done"
+            
+            // DEBUG: Show XP progression info
+            println("Dashboard: Level ${s.level} needs ${s.xpRequired} XP")
         }
     }
 }

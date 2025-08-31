@@ -26,6 +26,11 @@ class DashboardViewModel(private val db: AppDatabase) : ViewModel() {
     fun refresh() = viewModelScope.launch {
         val lr = LevelRepo(db).getCurrent()
         val date = Dates.todayLocal()
+        
+        // DEBUG: Test XP calculation
+        val currentLevel = lr.levelId
+        val xpNeeded = com.example.vampire_system.data.model.Xp.xpForLevel(currentLevel)
+        println("DEBUG Dashboard: Level $currentLevel needs $xpNeeded XP")
 
         val cursor = db.openHelper.readableDatabase.query(
             "SELECT SUM(CASE WHEN status='PENDING' THEN 1 ELSE 0 END), " +

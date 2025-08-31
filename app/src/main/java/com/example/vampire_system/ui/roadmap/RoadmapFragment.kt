@@ -38,6 +38,16 @@ class RoadmapFragment : Fragment() {
         )
         rv.adapter = adapter
 
+        loadRoadmap()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh roadmap when returning to this screen
+        loadRoadmap()
+    }
+
+    private fun loadRoadmap() {
         io.launch {
             val db = AppDatabase.get(requireContext())
             currentLevel = LevelRepo(db).getCurrent().levelId
@@ -73,10 +83,20 @@ class RoadVH(v: View) : RecyclerView.ViewHolder(v) {
     private val tvMilestone = v.findViewById<TextView>(R.id.tvMilestone)
     private val btn = v.findViewById<Button>(R.id.btnDetails)
     fun bind(c: com.example.vampire_system.domain.repo.LevelCard, current: Int, onDetails: (Int)->Unit) {
+        // Show level with XP requirement prominently
         tvLevel.text = if (c.level == current) "L${c.level} • CURRENT" else "L${c.level}"
-        tvXp.text = "XP: ${c.xpNeeded} (cum ${c.cumulativeXp})"
+        
+        // Show XP requirement clearly - this should now show the new progression
+        tvXp.text = if (c.level == current && c.currentXp != null) {
+            "XP: ${c.currentXp} / ${c.xpNeeded} (cum ${c.cumulativeXp})"
+        } else {
+            "XP: ${c.xpNeeded} (cum ${c.cumulativeXp})"
+        }
+        
         tvUnlocks.text = "Unlocks: " + (if (c.unlockedAbilities.isEmpty()) "-" else c.unlockedAbilities.joinToString(", "))
-        tvTasks.text = "Level tasks: ${c.taskCount}"
+        
+        // Show completed vs total tasks
+        tvTasks.text = "Tasks: ${c.completedTasks} / ${c.taskCount} completed"
         if (c.milestone != null) {
             tvMilestone.visibility = View.VISIBLE
             tvMilestone.text = (if (c.milestone.isBoss) "BOSS • " else "Milestone • ") +

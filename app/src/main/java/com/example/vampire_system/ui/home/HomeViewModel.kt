@@ -73,6 +73,38 @@ class HomeViewModel(private val db: AppDatabase) : ViewModel() {
         QuestEngine(db, lr).generateDaily(today)
     }
 
+    fun regenerateAllQuests() = viewModelScope.launch {
+        val today = Dates.todayLocal()
+        val lr = LevelRepo(db)
+        // This will now show ALL unlocked abilities and level tasks
+        QuestEngine(db, lr).generateDaily(today)
+    }
+    
+    fun refreshQuests() = viewModelScope.launch {
+        val today = Dates.todayLocal()
+        val lr = LevelRepo(db)
+        // Regenerate today's quests to include any new level tasks
+        QuestEngine(db, lr).generateDaily(today)
+    }
+
+    suspend fun getCoreGateStatus(): CoreGateStatus {
+        val today = Dates.todayLocal()
+        val lr = LevelRepo(db)
+        val level = lr.getCurrent().levelId
+        val unlocked = com.example.vampire_system.domain.engine.CoreGateEngine(db).isUnlockedForToday(level, today)
+        val foundations = com.example.vampire_system.data.model.Xp.FOUNDATIONS
+        val foundationCount = db.questInstanceDao().listForDate(today)
+            .count { it.abilityId in foundations && it.status == com.example.vampire_system.data.model.QuestStatus.DONE }
+        
+        return CoreGateStatus(level, unlocked, foundationCount)
+    }
+
+    data class CoreGateStatus(
+        val level: Int,
+        val unlocked: Boolean,
+        val foundationCount: Int
+    )
+
     class Factory(private val db: AppDatabase) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T = HomeViewModel(db) as T

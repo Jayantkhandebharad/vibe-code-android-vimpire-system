@@ -61,4 +61,9 @@
         android:id="@+id/navigation_search"
         android:name="com.example.vampire_system.ui.search.SearchFragment"
         android:label="Search" />
+
+    <fragment
+        android:id="@+id/navigation_evidence"
+        android:name="com.example.vampire_system.ui.evidence.EvidenceFragment"
+        android:label="Evidence Library" />
 </navigation>
